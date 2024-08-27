@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cryptocurrency Prediction</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #00ff88;
+            --secondary-color: #00ccff;
+            --text-color: #ffffff;
+            --background-color: #000000;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--background-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            padding: 2rem;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: #00ff88;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 2rem;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+        }
+
+        label {
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+
+        select, input[type="number"] {
+            margin-bottom: 1rem;
+            padding: 0.8rem;
+            border: none;
+            border-radius: 5px;
+            background-color: rgba(255, 255, 255, 0.1);
+            color: var(--text-color);
+        }
+
+        input[type="submit"] {
+            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+            color: var(--background-color);
+            border: none;
+            padding: 0.8rem;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: transform 0.3s ease;
+        }
+
+        input[type="submit"]:hover {
+            transform: translateY(-3px);
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Cryptocurrency Prediction</h1>
+    <form action="/results" method="post">
+        <label for="crypto">Select Cryptocurrency:</label>
+        <select name="crypto" id="crypto">
+            <option value="BTC-USD">Bitcoin (BTC)</option>
+            <option value="ETH-USD">Ethereum (ETH)</option>
+            <option value="LTC-USD">Litecoin (LTC)</option>
+        </select>
+        <br>
+        <label for="num_days">Number of Days for Prediction:</label>
+        <input type="number" id="num_days" name="num_days" min="1" max="15" required>
+        <br>
+        <input type="submit" value="Get Predictions">
+    </form>
+</body>
+
+</html>

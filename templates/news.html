@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cryptocurrency News</title>
+    <style>
+        :root {
+            --primary-color: #00ff88;
+            --secondary-color: #00ccff;
+            --text-color: #ffffff;
+            --background-color: #000000;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: var(--background-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 20px;
+        }
+
+        h1 {
+            text-align: center;
+            color: var(--primary-color);
+        }
+
+        #news-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .news-card {
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            overflow: hidden;
+            transition: transform 0.3s ease;
+        }
+
+        .news-card:hover {
+            transform: scale(1.03);
+        }
+
+        .news-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .news-content {
+            padding: 20px;
+        }
+
+        .news-title {
+            font-size: 1.2em;
+            margin-bottom: 10px;
+            color: var(--secondary-color);
+        }
+
+        .news-description {
+            font-size: 0.9em;
+            margin-bottom: 10px;
+        }
+
+        .news-source {
+            font-size: 0.8em;
+            color: var(--primary-color);
+        }
+
+        .news-link {
+            display: inline-block;
+            margin-top: 10px;
+            color: var(--secondary-color);
+            text-decoration: none;
+        }
+
+        .news-link:hover {
+            text-decoration: underline;
+        }
+
+        #error-message {
+            text-align: center;
+            color: #ff4444;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Cryptocurrency News</h1>
+    <div id="news-container"></div>
+    <div id="error-message"></div>
+
+    <script>
+        const newsContainer = document.getElementById('news-container');
+        const errorMessage = document.getElementById('error-message');
+        const apiKey = '5036688b39ee42d7afdb1e1740b85df8'; // Replace with your actual NewsAPI key
+        const apiUrl = `https://newsapi.org/v2/everything?q=cryptocurrency&sortBy=publishedAt&apiKey=${apiKey}`;
+
+        async function fetchNews() {
+            try {
+                const response = await fetch(apiUrl);
+                if (!response.ok) {
+                    throw new Error('Failed to fetch news');
+                }
+                const data = await response.json();
+                displayNews(data.articles);
+            } catch (error) {
+                showError('Error fetching news. Please try again later.');
+                console.error('Error:', error);
+            }
+        }
+
+        function displayNews(articles) {
+            newsContainer.innerHTML = '';
+            articles.forEach(article => {
+                const card = document.createElement('div');
+                card.className = 'news-card';
+                card.innerHTML = `
+                    <img src="${article.urlToImage || 'https://via.placeholder.com/300x200?text=No+Image'}" alt="${article.title}" class="news-image">
+                    <div class="news-content">
+                        <h2 class="news-title">${article.title}</h2>
+                        <p class="news-description">${article.description || 'No description available'}</p>
+                        <p class="news-source">Source: ${article.source.name}</p>
+                        <a href="${article.url}" target="_blank" class="news-link">Read more</a>
+                    </div>
+                `;
+                newsContainer.appendChild(card);
+            });
+        }
+
+        function showError(message) {
+            errorMessage.textContent = message;
+        }
+
+        fetchNews();
+    </script>
+</body>
+</html>
